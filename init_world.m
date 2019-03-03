@@ -14,12 +14,12 @@ function [coordinates, connectivity] = init_world(X_size, Y_size, num_UEs, K_b)
     
     % generate random coordinates for UEs
     for i = 2:num_UEs+1
-        coordinates(i,:) = [coordinates; rand()*X_size, rand()*Y_size];
+        coordinates(i,:) = [rand()*X_size, rand()*Y_size];
     end
     
     % compute connectivity
-    for i = 1:l
-    for j = 1:l
+    for i = 1:len
+    for j = 1:len
         d = compute_connectivity(coordinates(i,1),coordinates(i,2), ...
                                  coordinates(j,1),coordinates(j,2), ...
                                  (i == 1 || j == 1), K_b);
