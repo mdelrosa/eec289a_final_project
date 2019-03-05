@@ -13,11 +13,15 @@ function plot_conn(coordinates,connectivity,Xlim,Ylim)
     hold off;
     xlim([0,Xlim]);
     ylim([0,Ylim]);
+    grid on;
+    pbaspect([1 1 1]);
     
     subplot(1,2,2);
     scatter(coordinates(:,1),coordinates(:,2));
     ylim([0, Xlim]);
     xlim([0, Ylim]);
+    grid on;
+    pbaspect([1 1 1]);
     
 end
 
