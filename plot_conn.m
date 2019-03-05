@@ -1,6 +1,7 @@
 function plot_conn(coordinates,connectivity,Xlim,Ylim)
 
-    % plot UEs with links to best connected neighbor
+    disp(connectivity);
+
     subplot(1,2,1);
     for i = 1:size(connectivity,1)
         [~,nearest] = max(connectivity(i,:));

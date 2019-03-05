@@ -6,9 +6,13 @@ clc;
 world_x = 10;
 world_y = 10;
 num_UE = 50;
-base_station_gain = 2; % base station has double strength
+K_b = 2; % base station has double strength
+K_u = 1;
+alpha_b = 1;
+alpha_u = 1;
 
-[coordinates, connectivity] = init_world(world_x, world_y, num_UE, base_station_gain);
+[coordinates, connectivity] = init_world(world_x, world_y, num_UE, ...
+                                         K_b, K_u, alpha_b, alpha_u);
 
 %% plots all UEs in space with lines showing strongest
 % connection to a given UE
