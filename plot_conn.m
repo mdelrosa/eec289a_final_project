@@ -1,6 +1,6 @@
 function plot_conn(coordinates,connectivity,Xlim,Ylim)
 
-    disp(connectivity);
+    %disp(connectivity);
 
     subplot(1,2,1);
     for i = 1:size(connectivity,1)
