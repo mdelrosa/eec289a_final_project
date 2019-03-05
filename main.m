@@ -41,3 +41,10 @@ plot((1:epi_lim),actions);
 title('Cluster Head Selection');
 xlabel('Episode #');
 ylabel('Cluster Head');
+
+%% Test environment 
+
+%actions = ones(1,num_UE);
+%[r,sel] = environment(actions,connectivity,avg_msgs,sigma2);
+
+%find(sel > 1)
