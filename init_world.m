@@ -1,7 +1,8 @@
-function [CX, conn_mx] = init_world(X_size, Y_size, num_UEs, D_p1, K_b, K_u, alpha_b, alpha_u)
+function [CX, conn_mx, avg_msgs] = init_world(X_size, Y_size, num_UEs, D_p1, K_b, K_u, alpha_b, alpha_u)
 
     % |CX| = [num_UEs + 1, 2]  => (x1,y1); (x2,y2); ...
     % |conn_mx| = [num_UEs + 1, num_UEs + 1]
+    % base station index = 1
    
     % assert some input conditions
     assert(alpha_b > 0 && alpha_u > 0 && ...
@@ -11,13 +12,18 @@ function [CX, conn_mx] = init_world(X_size, Y_size, num_UEs, D_p1, K_b, K_u, alp
     
     assert(num_UEs > 1, 'Must have at least one UE');
     
+    CX = zeros(num_UEs,2);
+    
     % place base station in the center
-    CX = [X_size/2, Y_size/2];
+    CX(1,:) = [X_size/2, Y_size/2];
     
     % randomly distribute UEs
     for i = 1:num_UEs
-        CX = [CX; rand()*X_size, rand()*Y_size];
+        CX(i,:) = [rand()*X_size, rand()*Y_size];
     end
+    
+    % # of average messages ranges from [0,1000]
+    avg_msgs = randi(1001,num_UEs,1) - 1;
     
     % initialize connectivity matrix
     l = size(CX,1);

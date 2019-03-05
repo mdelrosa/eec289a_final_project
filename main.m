@@ -11,9 +11,11 @@ K_u = 1;        % multiplicative UE parameter
 alpha_b = 1;    % exponential base-station parameter
 alpha_u = 1;    % exponential UE parameter
 D_p1 = 1;       % normalized distance within which p(success) = 1.0
+sigma2 = 2;     % variance of # of msgs sent by UEs around averages
+
 
 % Generate a simulation world with given parameters
-[coordinates, connectivity] = init_world(world_x, world_y, num_UE, ...
+[coordinates, connectivity, avg_msgs] = init_world(world_x, world_y, num_UE, ...
                                          D_p1, K_b, K_u, alpha_b, alpha_u);
 
 %% plots all UEs in space with lines showing strongest
