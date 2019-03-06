@@ -22,8 +22,8 @@ function [reward, selection] = environment(action,connectivity,avg_msgs,sigma2)
     if(length(heads) > 1)
         
         % remove other heads from selection to update connectivities
-        selectors = 2:num_UE+1;
-        selectors(heads(2:length(heads))) = [];
+        selectors = 1:num_UE+1;
+        selectors(heads) = [];
         selectors = selectors - 1;
         
         for i = 2:length(heads)
@@ -33,6 +33,8 @@ function [reward, selection] = environment(action,connectivity,avg_msgs,sigma2)
     
     % pick best connectivities
     [best, selection] = max(choices,[],1);
+    
+    selection = heads(selection);
     
     % multiply by #messages and sum (vector mult)
     reward = best * messages';

@@ -1,7 +1,7 @@
 function plot_conn(coordinates,connectivity,Xlim,Ylim)
 
     %disp(connectivity);
-
+    figure(1);
     subplot(1,2,1);
     for i = 1:size(connectivity,1)
         [~,nearest] = max(connectivity(i,:));
