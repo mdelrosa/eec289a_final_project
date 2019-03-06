@@ -17,7 +17,7 @@ end
 %% Helper Function: greedy action
 function action = greedy_action(val_act,n_heads,num_UEs)
     % TO-DO: Handle larger # of cluster heads
-    action=zeros(num_UEs);
+    action=zeros(1,num_UEs);
     i_action=find(val_act==max(val_act));
     if length(i_action) > 1
        i_action = i_action(rand(length(i_action)));
@@ -27,7 +27,7 @@ end
 %% Helper Function: random action for epsilon greedy
 function action = random_action(n_heads,num_UEs)
     % TO-DO: Handle larger # of cluster heads
-    action=zeros(num_UEs);
+    action=zeros(1,num_UEs);
     r=randi(num_UEs);
     action(r)=1;
 end
