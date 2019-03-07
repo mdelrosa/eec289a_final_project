@@ -1,5 +1,5 @@
 %% Main Function: base station / RL agent
-function action = base_station(val_act, n_heads, num_UEs,eps)
+function [action,i_UE] = base_station(val_act, n_heads, num_UEs,eps)
 
     % Inputs:
     % -> val_act = action value estimates; assume that each entry
@@ -13,6 +13,7 @@ function action = base_station(val_act, n_heads, num_UEs,eps)
     % take epsilon-greedy action
     r=rand();
     action = (r>=eps)*greedy_action(val_act,n_heads,num_UEs)+(r<eps)*random_action(n_heads,num_UEs);
+    i_UE=find(action==1);
 end
 %% Helper Function: greedy action
 function action = greedy_action(val_act,n_heads,num_UEs)
@@ -20,7 +21,7 @@ function action = greedy_action(val_act,n_heads,num_UEs)
     action=zeros(1,num_UEs);
     i_action=find(val_act==max(val_act));
     if length(i_action) > 1
-       i_action = i_action(rand(length(i_action)));
+       i_action = i_action(randi(length(i_action)));
     end
     action(i_action)=1;
 end

@@ -22,22 +22,47 @@ sigma2 = 2;     % variance of # of msgs sent by UEs around averages
 % connection to a given UE
 plot_conn(coordinates,connectivity,world_x,world_y);
 
-%% Test base station
-val_act=randi(num_UE,1,num_UE);
-val_act(floor(num_UE/2))=num_UE+1;
-n_heads=1; % should be able to choose more cluster heads eventually; set to 1 for now
+%% episode iteration
+val_act=zeros(1,num_UE);
+n_act=zeros(1,num_UE); % # of times action was taken
 epi_count=1;
+n_heads=1;
 epi_lim=500;
 eps=0.1;
 actions=zeros(1,epi_lim); % preallocate action log vector
-% for now, use fixed act_val estimate to test out base_station
-while epi_count <= epi_lim
-    actions(epi_count) = find(base_station(val_act, n_heads, num_UE,eps)==1);
-    epi_count=epi_count+1;
+rewards=zeros(1,epi_lim);
+while epi_count<=epi_lim
+	[action,i_UE]=base_station(val_act, n_heads, num_UE,eps);
+	reward=environment(action,connectivity,avg_msgs,sigma2);
+    n_act(i_UE)=n_act(i_UE)+1;
+    val_act(i_UE)=val_act(i_UE)+(reward-val_act(i_UE)/n_act(i_UE));
+	epi_count=epi_count+1;
+    actions(epi_count)=i_UE; % keep track of which UE we chose
+    rewards(epi_count)=reward;
 end
-%% Plot action selected per episode on eps-greedy basis.
-figure(2);clf;hold on;
-plot((1:epi_lim),actions);
-title('Cluster Head Selection');
-xlabel('Episode #');
-ylabel('Cluster Head');
+% plot reward over time
+figure(1);clf;hold on;
+plot((1:episode_lim),episode_)
+
+%% Test base station
+test=0;
+if test
+    val_act=randi(num_UE,1,num_UE);
+    val_act(floor(num_UE/2))=num_UE+1;
+    n_heads=1; % should be able to choose more cluster heads eventually; set to 1 for now
+    epi_count=1;
+    epi_lim=500;
+    eps=0.1;
+    actions=zeros(1,epi_lim); % preallocate action log vector
+    % for now, use fixed act_val estimate to test out base_station
+    while epi_count <= epi_lim
+        actions(epi_count) = find(base_station(val_act, n_heads, num_UE,eps)==1);
+        epi_count=epi_count+1;
+    end
+    % Plot action selected per episode on eps-greedy basis.
+    figure(2);clf;hold on;
+    plot((1:epi_lim),actions);
+    title('Cluster Head Selection');
+    xlabel('Episode #');
+    ylabel('Cluster Head');
+end

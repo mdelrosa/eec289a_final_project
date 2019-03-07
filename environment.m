@@ -1,6 +1,7 @@
 function reward = environment(action,connectivity,avg_msgs,sigma2)
 
-    num_UE = length(connectivity) - 1;
+    num_UE = length(connectivity);
+%     num_UE = length(connectivity) - 1;
     
     % make sure inputs are row-vectors
     action = reshape(action,[1,length(action)]);
