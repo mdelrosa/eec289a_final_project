@@ -57,7 +57,8 @@ plot((1:epi_lim),rewards);
 figure(3);
 surf(connectivity);
 colorbar;
-plot_conn(coordinates,connectivity,world_x,world_y,i_UE);
+[~,head]=max(n_act);
+plot_conn(coordinates,connectivity,world_x,world_y,head);
 %% Testbed for helper functions
 test=0;
 if test
