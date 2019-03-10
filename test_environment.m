@@ -19,13 +19,17 @@ function test_environment(coordinates,connectivity, avg_msgs, sigma2)
         end
     end
     
+    if(index == 0)
+        index = 1;
+    end
+    
     disp(index);
     action = zeros(1,num_UE);
     action(index) = 1;
     
     [~, selection] = environment(action,connectivity,avg_msgs,sigma2);
     
-    figure(3);clf;hold on;
+    figure(4);clf;hold on;
     
     % plot all points
     for p = 1:length(coordinates)

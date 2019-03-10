@@ -13,7 +13,7 @@ function [reward, selection] = environment(action,connectivity,avg_msgs,sigma2)
     assert(length(avg_msgs) == num_UE, 'action and connectivity dimensions do not agree');
     
     % find number of messages sent at this time-step
-    messages = generate_messages(avg_msgs,sigma2);
+    messages = generate_messages(0,avg_msgs,sigma2);
     
     % select heads, including base-station
     heads = [1, find(action) + 1];          % offset for base-station
@@ -44,10 +44,14 @@ function [reward, selection] = environment(action,connectivity,avg_msgs,sigma2)
     assert(isequal(size(reward),[1 1]), 'reward isnt a single number!');
 end
 
-function messages = generate_messages(avg_msgs,sigma2)
+function messages = generate_messages(use_noise,avg_msgs,sigma2)
 
-    % add sigma2 variance to avg and round
-    messages = round(randn(size(avg_msgs))*sigma2) + avg_msgs;
+    if(use_noise)
+        % add sigma2 variance to avg and round
+        messages = round(randn(size(avg_msgs))*sigma2) + avg_msgs;
+    else
+        messages = avg_msgs;
+    end
     
     % don't send negative amount of messages
     for i = 1:length(avg_msgs)
