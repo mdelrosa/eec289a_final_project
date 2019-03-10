@@ -5,7 +5,7 @@ clc;
 % environment parameters
 
 radius = 500;   % base station radius
-num_UE = 40;    % best to use multiples of 4
+num_UE = 12;    % best to use multiples of 4
 setup_type = 1; % cluster UEs for simulation
 K_b = 3;        % multiplicative base-station parameter
 K_u = 1;        % multiplicative UE parameter

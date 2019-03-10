@@ -13,8 +13,10 @@ function [coordinates, connectivity, avg_msgs] = init_world(type, radius, num_UE
     end
     
     % compute connectivity
-    connectivity = compute_connectivity(coordinates, heads, D_p1, ...
+    SNR = compute_connectivity(coordinates, heads, D_p1, ...
                         K_b, K_u, K_f, alpha_b, alpha_u, alpha_f);
+                    
+    len = length(coordinates);
 end
 
 function [coordinates, heads, avg_msgs] = cluster_init(radius, num_UEs)
@@ -44,7 +46,7 @@ function [coordinates, heads, avg_msgs] = cluster_init(radius, num_UEs)
         
         % place fog node in center
         coordinates((i - 1) * cluster_size + 2,:) = [xs(i), ys(i)];
-        avg_msgs((i - 1) * cluster_size + 1) = i * 250;
+        avg_msgs((i - 1) * cluster_size + 1) = (5 - i) * 250;
         heads(i) = (i - 1) * cluster_size + 2;
         
         % place rest of cluster around in guassian distribution
@@ -53,7 +55,7 @@ function [coordinates, heads, avg_msgs] = cluster_init(radius, num_UEs)
                 [xs(i) + round(randn()*radius*0.1), ...
                  ys(i) + round(randn()*radius*0.1) ];
              
-            avg_msgs((i - 1) * cluster_size + j) = i * 250;
+            avg_msgs((i - 1) * cluster_size + j) = (5 - i) * 250;
         end
     end
     
