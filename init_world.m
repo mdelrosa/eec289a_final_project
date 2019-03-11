@@ -109,47 +109,41 @@ function connectivity = compute_connectivity(coordinates, heads, ...
         
         d = connectivity(i,j);
         
-       % B-u connection
-       if(i == 1 || j == 1)
-           K = K_b;
-           C = C_b;
-           %A = toGain(17);
-       
-       % connection to fog node
-       elseif (ismember(i,heads) || ismember(j,heads))
-           K = K_f;
-           C = C_f;
-           %A = toGain(4);
+        % B-u connection
+        if(i == 1 || j == 1)
+            K = K_b;
+            C = C_b;
+            if (ismember(i,heads) || ismember(j,heads))
+                K = K_b - (K_f-K_b)*0.5;
+                C = C_b - (C_f-C_b)*0.5;
+            end
+        % connection to fog node
+        elseif (ismember(i,heads) || ismember(j,heads))
+            K = K_f;
+            C = C_f;
            
-       % D2D connection
-       else
-           K = K_u;
-           C = C_u;
-           %A = toGain(4);
-       end
+        % D2D connection
+        else
+            K = K_u;
+            C = C_u;
+        end
        
-       %N = toGain(-116);
-       %P = toGain(23);
+        % dist -> PathLoss
+        d = C + K * log10(d/1000);
        
-       % dist -> PathLoss
-       d = C + K * log10(d/1000);
+        % PathLoss -> Gain
+        d = toGain(-d);
        
-       % PathLoss -> Gain
-       d = toGain(-d);
+        % SNR -> BER
+        d = min([1,(((3)/(2*sqrt(2*pi*d))) * exp(-0.5 * d))]);
        
-       % Compute SNR (power, antenna, pathloss gain, noise)
-       %d = P * A * d * N; 
-           
-       % SNR -> BER
-       d = ((3)/(sqrt(2*pi*d))) * exp(-0.5 * d);
-       
-       connectivity(i,j) = d;
+        connectivity(i,j) = d;
     end
     end
     
-    connectivity = connectivity / 2;
+    %connectivity = connectivity / 2;
     %f = find(connectivity > 1);
-    connectivity(connectivity > 1) = 1;
+    %connectivity(connectivity > 1) = 1;
     
     connectivity = 1 - connectivity;
     

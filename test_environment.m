@@ -5,13 +5,17 @@ function test_environment(coordinates,connectivity, avg_msgs, sigma2)
     mx = 0;
     index = 0;
     
+    rs = zeros(1,num_UE);
+    users = zeros(1,num_UE);
+    
     for i = 1:num_UE
         action = zeros(1,num_UE);
         action(i) = 1;
         
-        [~, selection] = environment(action,connectivity,avg_msgs,sigma2);
-        
+        [r, selection] = environment(action,connectivity,avg_msgs,sigma2);
+        rs(i) = r;
         count = length(find(selection > 1));
+        users(i) = count;
         
         if(count > mx)
             mx = count;
@@ -49,7 +53,16 @@ function test_environment(coordinates,connectivity, avg_msgs, sigma2)
         hold on;
     end
     plot(coordinates(other,1),coordinates(other,2),'*');
+    title('Plot of Best Cluster Head Assignment');
     hold off;
+    
+    figure(5);clf;hold on;
+    subplot(2,1,1);
+    stem(rs);
+    title('throughput vs cluster head assignment');
+    subplot(2,1,2);
+    stem(users);
+    title('size of cluster vs cluster head assignment');
 
 end
 

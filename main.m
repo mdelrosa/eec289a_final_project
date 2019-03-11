@@ -5,9 +5,9 @@ clc;
 % environment parameters
 
 radius = 500;   % base station radius
-num_UE = 12;    % best to use multiples of 4
+num_UE = 24;    % best to use multiples of 4
 setup_type = 1; % cluster UEs for simulation
-r_f = 0.5;      % distance to center of clusters
+r_f = 0.9;      % distance to center of clusters
 r_c = 0.05;     % distribution of UEs around clusers
 K_b = 37.6;     % multiplicative base-station parameter
 K_u = 40;       % multiplicative UE parameter
@@ -15,7 +15,6 @@ K_f = 38.8;     % multiplicative fog node parameter
 C_b = 15.3;     % exponential base-station parameter
 C_u = 28;       % exponential UE parameter
 C_f = 21.65;    % exponential fog node parameter
-D_p1 = 1;       % normalized distance within which p(success) = 1.0
 sigma2 = 2;     % variance of # of msgs sent by UEs around averages
 
 params = [radius, num_UE, setup_type, K_b, K_u, K_f, C_b, C_u, C_f, r_f, r_c];
@@ -29,6 +28,8 @@ world_y = radius*2;
 
 %% Test init_world 
 %plot_conn(coordinates,connectivity,world_x,world_y);
+test_environment(coordinates, connectivity, avg_msgs, sigma2);
+return;
 
 %% episode iteration
 val_act=ones(1,num_UE)*1200;
