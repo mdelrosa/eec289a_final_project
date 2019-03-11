@@ -1,4 +1,4 @@
-function test_environment(coordinates,connectivity, avg_msgs, sigma2)
+function test_environment(coordinates,connectivity, avg_msgs, sigma2, radius)
 
     num_UE = length(connectivity) - 1;
     
@@ -54,6 +54,8 @@ function test_environment(coordinates,connectivity, avg_msgs, sigma2)
     end
     plot(coordinates(other,1),coordinates(other,2),'*');
     title('Plot of Best Cluster Head Assignment');
+    ylim([0 (2*radius)]);
+    xlim([0 (2*radius)]);
     hold off;
     
     figure(5);clf;hold on;
@@ -63,6 +65,7 @@ function test_environment(coordinates,connectivity, avg_msgs, sigma2)
     subplot(2,1,2);
     stem(users);
     title('size of cluster vs cluster head assignment');
+    hold off;
 
 end
 

@@ -5,7 +5,7 @@ clc;
 % environment parameters
 
 radius = 500;   % base station radius
-num_UE = 24;    % best to use multiples of 4
+num_UE = 40;    % best to use multiples of 4
 setup_type = 1; % cluster UEs for simulation
 r_f = 0.9;      % distance to center of clusters
 r_c = 0.05;     % distribution of UEs around clusers
@@ -28,7 +28,7 @@ world_y = radius*2;
 
 %% Test init_world 
 %plot_conn(coordinates,connectivity,world_x,world_y);
-test_environment(coordinates, connectivity, avg_msgs, sigma2);
+test_environment(coordinates, connectivity, avg_msgs, sigma2, radius);
 return;
 
 %% episode iteration
@@ -75,5 +75,5 @@ if test
     test_base(num_UE);
 
     % Test environment 
-    test_environment(coordinates, connectivity, avg_msgs, sigma2);
+    test_environment(coordinates, connectivity, avg_msgs, sigma2, radius);
 end
