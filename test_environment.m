@@ -20,6 +20,7 @@ function test_environment(coordinates,connectivity, avg_msgs, sigma2)
     end
     
     if(index == 0)
+        disp('Resorting to default index = 1');
         index = 1;
     end
     
@@ -35,7 +36,7 @@ function test_environment(coordinates,connectivity, avg_msgs, sigma2)
     for p = 1:length(coordinates)
         x = coordinates(p,1);
         y = coordinates(p,2);
-        plot(x,y,'-o');
+        plot(x,y,'o');
         hold on;
     end
     
@@ -47,8 +48,8 @@ function test_environment(coordinates,connectivity, avg_msgs, sigma2)
         plot(x,y,'-o');
         hold on;
     end
+    plot(coordinates(other,1),coordinates(other,2),'*');
     hold off;
-    
 
 end
 

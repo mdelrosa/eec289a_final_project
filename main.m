@@ -7,25 +7,28 @@ clc;
 radius = 500;   % base station radius
 num_UE = 12;    % best to use multiples of 4
 setup_type = 1; % cluster UEs for simulation
-K_b = 3;        % multiplicative base-station parameter
-K_u = 1;        % multiplicative UE parameter
-K_f = 2;        % multiplicative fog node parameter
-alpha_b = 1;    % exponential base-station parameter
-alpha_u = 1;    % exponential UE parameter
-alpha_f = 1;    % exponential fog node parameter
+r_f = 0.5;      % distance to center of clusters
+r_c = 0.05;     % distribution of UEs around clusers
+K_b = 37.6;     % multiplicative base-station parameter
+K_u = 40;       % multiplicative UE parameter
+K_f = 38.8;     % multiplicative fog node parameter
+C_b = 15.3;     % exponential base-station parameter
+C_u = 28;       % exponential UE parameter
+C_f = 21.65;    % exponential fog node parameter
 D_p1 = 1;       % normalized distance within which p(success) = 1.0
 sigma2 = 2;     % variance of # of msgs sent by UEs around averages
+
+params = [radius, num_UE, setup_type, K_b, K_u, K_f, C_b, C_u, C_f, r_f, r_c];
 
 world_x = radius*2;
 world_y = radius*2;
 
 % Generate a simulation world with given parameters
-[coordinates, connectivity, avg_msgs] = init_world( ...
-    setup_type, radius, num_UE, D_p1, K_b, K_u, K_f, alpha_b, alpha_u, alpha_f ...
-);
+[coordinates, connectivity, avg_msgs] = init_world(params);
+
 
 %% Test init_world 
-% plot_conn(coordinates,connectivity,world_x,world_y);
+%plot_conn(coordinates,connectivity,world_x,world_y);
 
 %% episode iteration
 val_act=ones(1,num_UE)*1200;
