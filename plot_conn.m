@@ -22,6 +22,7 @@ function plot_conn(coordinates,connectivity,Xlim,Ylim,i_head)
     subplot(1,2,2);hold on;
     scatter(coordinates(:,1),coordinates(:,2));
     if (i_head > 0)
+        i_head = i_head+1;
         scatter(coordinates(i_head,1),coordinates(i_head,2),'LineWidth',3);
     end
     ylim([0, Xlim]);

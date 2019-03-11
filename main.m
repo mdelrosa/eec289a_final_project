@@ -29,10 +29,10 @@ world_y = radius*2;
 %% Test init_world 
 %plot_conn(coordinates,connectivity,world_x,world_y);
 test_environment(coordinates, connectivity, avg_msgs, sigma2, radius);
-return;
+%return;
 
 %% episode iteration
-val_act=ones(1,num_UE)*1200;
+val_act=ones(1,num_UE)*(500*(num_UE/4));
 n_act=zeros(1,num_UE); % # of times action was taken
 epi_count=1;
 n_heads=1;

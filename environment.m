@@ -1,5 +1,13 @@
-
 function [reward, selection] = environment(action,connectivity,avg_msgs,sigma2)
+
+    a0 = zeros(size(action));
+    [r0, ~] = env(a0,connectivity,avg_msgs,sigma2);
+    [r1, selection] = env(action,connectivity,avg_msgs,sigma2);
+    reward = r1 - r0;
+
+end
+
+function [reward, selection] = env(action,connectivity,avg_msgs,sigma2)
     
     % find number of UEs 
     num_UE = length(connectivity) - 1;
