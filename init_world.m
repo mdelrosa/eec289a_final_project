@@ -15,6 +15,7 @@ function [coordinates, connectivity, avg_msgs] = init_world(type, radius, num_UE
     % compute connectivity
     SNR = compute_connectivity(coordinates, heads, D_p1, ...
                         K_b, K_u, K_f, alpha_b, alpha_u, alpha_f);
+    connectivity=SNR;
                     
     len = length(coordinates);
 end
