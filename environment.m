@@ -1,5 +1,13 @@
-
 function [reward, selection] = environment(action,connectivity,avg_msgs,sigma2)
+
+    a0 = zeros(size(action));
+    [r0, ~] = env(a0,connectivity,avg_msgs,sigma2);
+    [r1, selection] = env(action,connectivity,avg_msgs,sigma2);
+    reward = r1 - r0;
+
+end
+
+function [reward, selection] = env(action,connectivity,avg_msgs,sigma2)
     
     % find number of UEs 
     num_UE = length(connectivity) - 1;
@@ -13,7 +21,7 @@ function [reward, selection] = environment(action,connectivity,avg_msgs,sigma2)
     assert(length(avg_msgs) == num_UE, 'action and connectivity dimensions do not agree');
     
     % find number of messages sent at this time-step
-    messages = generate_messages(0,avg_msgs,sigma2);
+    messages = generate_messages(1,avg_msgs,sigma2);
     
     % select heads, including base-station
     heads = [1, find(action) + 1];          % offset for base-station
