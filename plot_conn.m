@@ -14,6 +14,8 @@ function plot_conn(coordinates,connectivity,Xlim,Ylim,i_head)
         hold on;
     end
     hold off;
+    xlabel('Distance [m]');
+    ylabel('Distance [m]');
     xlim([0,Xlim]);
     ylim([0,Ylim]);
     grid on;
@@ -25,6 +27,8 @@ function plot_conn(coordinates,connectivity,Xlim,Ylim,i_head)
         i_head = i_head+1;
         scatter(coordinates(i_head,1),coordinates(i_head,2),'LineWidth',3);
     end
+    xlabel('Distance [m]');
+    ylabel('Distance [m]');
     ylim([0, Xlim]);
     xlim([0, Ylim]);
     grid on;
