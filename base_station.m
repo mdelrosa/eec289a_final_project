@@ -1,5 +1,5 @@
 %% Main Function: base station / RL agent
-function action = base_station(val_act, n_heads, num_UEs,eps)
+function [action,i_UE] = base_station(type,val_act,n_act,n_heads, num_UEs,eps,c,t)
 
     % Inputs:
     % -> val_act = action value estimates; assume that each entry
@@ -10,20 +10,52 @@ function action = base_station(val_act, n_heads, num_UEs,eps)
     % Outputs:
     % -> action = [a_1, a_2, ... a_n] where n=num_UEs, a_i in [0,1]
     
-    % take epsilon-greedy action
-    r=rand();
-    action = (r>=eps)*greedy_action(val_act,n_heads,num_UEs)+(r<eps)*random_action(n_heads,num_UEs);
+    % take UCB/epsilon-greedy action/random action
+    
+    if(type == 0) 
+        r=rand();
+        action = (r>=eps) * greedy_action(val_act,n_heads,num_UEs) + ...
+                 (r< eps) * random_action(n_heads,num_UEs);
+             
+    elseif (type == 1)
+        action = UCB_action(val_act,n_act,c,n_heads,num_UEs,t);
+        
+    elseif (type == 2)
+        action = random_action(n_heads,num_UEs);
+    end
+    i_UE=find(action==1);
 end
+
+%% Helper Function: UCB action
+function action = UCB_action(val_act,n_act,c,n_heads,num_UEs,t)
+    
+    vals = val_act + (c .* sqrt(t./n_act));
+
+    % TO-DO: Handle larger # of cluster heads
+    action=zeros(1,num_UEs);
+    i_action=find(vals==max(vals));
+    
+    if length(i_action) > 1
+       i_action = i_action(randi(length(i_action)));
+    end
+    
+    action(i_action)=1;
+end
+
 %% Helper Function: greedy action
 function action = greedy_action(val_act,n_heads,num_UEs)
+    
     % TO-DO: Handle larger # of cluster heads
     action=zeros(1,num_UEs);
     i_action=find(val_act==max(val_act));
+
     if length(i_action) > 1
-       i_action = i_action(rand(length(i_action)));
+       i_action = i_action(randi(length(i_action)));
     end
+    
     action(i_action)=1;
 end
+
 %% Helper Function: random action for epsilon greedy
 function action = random_action(n_heads,num_UEs)
     % TO-DO: Handle larger # of cluster heads
