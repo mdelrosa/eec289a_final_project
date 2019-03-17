@@ -1,4 +1,4 @@
-function [run_actions, run_val_act, val_act, heads, rewards, n_act] = rl_iteration(type,epsilon,c,runs,steps,num_UE,connectivity, avg_msgs, sigma2)
+function [run_actions, run_val_act, run_rewards, val_act, heads, rewards, n_act] = rl_iteration(type,epsilon,c,runs,steps,num_UE,connectivity, avg_msgs, sigma2)
     
     n_heads=1;
     run_count=1;
@@ -9,7 +9,7 @@ function [run_actions, run_val_act, val_act, heads, rewards, n_act] = rl_iterati
     
     run_actions=zeros(run_lim,epi_lim);
     run_val_act=zeros(run_lim,num_UE);
-    
+    run_rewards=zeros(run_lim,epi_lim);
     
     
     for run_count = 1:run_lim
@@ -50,7 +50,7 @@ function [run_actions, run_val_act, val_act, heads, rewards, n_act] = rl_iterati
         % track results over runs
         run_actions(run_count,:) = actions;
         run_val_act(run_count,:) = val_act;
-        
+        run_rewards(run_count,:) = rewards;
         % increment counter
         run_count = run_count + 1;
 

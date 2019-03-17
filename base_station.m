@@ -10,7 +10,7 @@ function [action,i_UE] = base_station(type,val_act,n_act,n_heads, num_UEs,eps,c,
     % Outputs:
     % -> action = [a_1, a_2, ... a_n] where n=num_UEs, a_i in [0,1]
     
-    % take UCB/epsilon-greedy action
+    % take UCB/epsilon-greedy action/random action
     
     if(type == 0) 
         r=rand();
@@ -19,8 +19,10 @@ function [action,i_UE] = base_station(type,val_act,n_act,n_heads, num_UEs,eps,c,
              
     elseif (type == 1)
         action = UCB_action(val_act,n_act,c,n_heads,num_UEs,t);
+        
+    elseif (type == 2)
+        action = random_action(n_heads,num_UEs);
     end
-    
     i_UE=find(action==1);
 end
 
